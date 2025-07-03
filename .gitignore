@@ -1,5 +1,5 @@
 *.csv
-*.html
+.*.html
 projet_spé_b3/*
 stop_times.txt
 stops.txt
