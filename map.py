@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request
 import pandas as pd
 import folium
-import branca
 from folium.plugins import MarkerCluster
 
 app = Flask(__name__)
