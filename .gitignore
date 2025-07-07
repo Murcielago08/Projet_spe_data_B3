@@ -3,3 +3,5 @@ db/*.csv
 projet_spé_b3/*
 stop_times.txt
 stops.txt
+env/*
+map_bordeaux.html
