@@ -6,23 +6,37 @@
     <style>
         body { font-family: Arial, sans-serif; display: flex; margin: 0; }
         form { width: 40%; padding: 20px; background: #f5f5f5; height: 100vh; overflow-y: auto; }
-        #map { width: 60%; height: 100vh; }
+        #map-container { width: 60%; height: 100vh; }
         label { display: block; margin-top: 10px; }
-        input, select { width: 100%; padding: 5px; margin-bottom: 10px; }
+        input[type="text"], select { width: 100%; padding: 5px; margin-bottom: 10px; }
         h2 { margin-top: 20px; }
+        .checkbox-group { margin-bottom: 10px; }
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 4px;
+            font-weight: normal;
+            margin-top: 0;
+        }
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 8px;
+            width: 16px;
+            height: 16px;
+        }
     </style>
 </head>
 <body>
     <form method="POST">
         <h2>Filtres communs</h2>
-        <label>Année :
-            <select name="annee">
-                <option value="">--Toutes--</option>
-                {% for a in annees %}
-                    <option value="{{ a }}" {% if form_data.annee == a|string %}selected{% endif %}>{{ a }}</option>
-                {% endfor %}
-            </select>
-        </label>
+        <label>Année :</label>
+        <div class="checkbox-group">
+            {% for a in annees %}
+                <label>
+                    <input type="checkbox" name="annee" value="{{ a }}" {% if a|string in form_data.getlist('annee') %}checked{% endif %}>
+                    {{ a }}
+                </label>
+            {% endfor %}
+        </div>
 
         <h2>Filtres logement</h2>
         <label>Prix min :
@@ -31,44 +45,48 @@
         <label>Prix max :
             <input type="text" name="prix_max" value="{{ form_data.prix_max }}">
         </label>
-        <label>Type de bien :
-            <select name="type_bien">
-                <option value="">--Tous--</option>
-                {% for tb in type_biens %}
-                    <option value="{{ tb }}" {% if form_data.type_bien == tb %}selected{% endif %}>{{ tb }}</option>
-                {% endfor %}
-            </select>
-        </label>
-        <label>Commune :
-            <select name="commune">
-                <option value="">--Toutes--</option>
-                {% for com in communes %}
-                    <option value="{{ com }}" {% if form_data.commune == com %}selected{% endif %}>{{ com }}</option>
-                {% endfor %}
-            </select>
-        </label>
+        <label>Type de bien :</label>
+        <div class="checkbox-group">
+            {% for tb in type_biens %}
+                <label>
+                    <input type="checkbox" name="type_bien" value="{{ tb }}" {% if tb in form_data.getlist('type_bien') %}checked{% endif %}>
+                    {{ tb }}
+                </label>
+            {% endfor %}
+        </div>
+        <!-- <label>Commune :</label>
+        <div class="checkbox-group" style="max-height:120px; overflow-y:auto;">
+            {% for com in communes %}
+                <label>
+                    <input type="checkbox" name="commune" value="{{ com }}" {% if com in form_data.getlist('commune') %}checked{% endif %}>
+                    {{ com }}
+                </label>
+            {% endfor %}
+        </div> -->
 
         <h2>Filtres éducation</h2>
-        <label>Type d'établissement :
-            <select name="type_etab">
-                <option value="">--Tous--</option>
-                {% for te in types_etab %}
-                    <option value="{{ te }}" {% if form_data.type_etab == te %}selected{% endif %}>{{ te }}</option>
-                {% endfor %}
-            </select>
-        </label>
-        <label>Statut (public/privé) :
-            <select name="statut">
-                <option value="">--Tous--</option>
-                {% for s in statuts %}
-                    <option value="{{ s }}" {% if form_data.statut == s %}selected{% endif %}>{{ s }}</option>
-                {% endfor %}
-            </select>
-        </label>
+        <label>Type d'établissement :</label>
+        <div class="checkbox-group">
+            {% for te in types_etab %}
+                <label>
+                    <input type="checkbox" name="type_etab" value="{{ te }}" {% if te in form_data.getlist('type_etab') %}checked{% endif %}>
+                    {{ te }}
+                </label>
+            {% endfor %}
+        </div>
+        <label>Statut (public/privé) :</label>
+        <div class="checkbox-group">
+            {% for s in statuts %}
+                <label>
+                    <input type="checkbox" name="statut" value="{{ s }}" {% if s in form_data.getlist('statut') %}checked{% endif %}>
+                    {{ s }}
+                </label>
+            {% endfor %}
+        </div>
 
         <input type="submit" value="Filtrer">
     </form>
-    <div id="map">
+    <div id="map-container">
         {{ map_html | safe }}
     </div>
 </body>
