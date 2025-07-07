@@ -9,6 +9,8 @@
     - [3. Activer l'environnement virtuel](#3-activer-lenvironnement-virtuel)
     - [4. Installer les dépendances](#4-installer-les-dépendances)
   - [Introduction](#introduction)
+  - [Problematique](#problematique)
+    - [Objectifs](#objectifs)
   - [Sources](#sources)
 
 ## Récupérer l'environnement
@@ -61,4 +63,10 @@ dashboard interactif pour visualiser les tendances du marché immobilier à Bord
 
 ## Sources
 
-explore.data.gouv.fr
+[Annuaire de l'éducation](https://data.education.gouv.fr/explore/dataset/fr-en-annuaire-education/table/?disjunctive.type_etablissement&disjunctive.libelle_academie&disjunctive.libelle_region&disjunctive.ministere_tutelle&disjunctive.appartenance_education_prioritaire&disjunctive.nom_commune&disjunctive.code_postal&disjunctive.code_departement)
+
+
+[Demande de valeurs foncières géolocalisée sur Bordeaux Métropole](https://opendata.bordeaux-metropole.fr/explore/dataset/demande-de-valeurs-foncieres-geolocalisee-bordeaux-metropole/information/?location=19,44.85485,-0.5691&basemap=jawg.streets)
+
+
+[Etablissement (d'une entreprise)](https://datahub.bordeaux-metropole.fr/explore/dataset/fi_etabl_p/information/)
