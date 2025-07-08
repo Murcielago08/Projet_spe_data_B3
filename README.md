@@ -61,10 +61,11 @@ La carte permet ainsi d’identifier des tendances, des zones attractives ou sou
 
 ## 🗂️ Organisation du projet
 
+
 ```
 Projet_python_B3/
 │
-├── db/                # Données sources : DVF, entreprises, établissements scolaires, transports
+├── db/                # Données sources : demande-de-valeurs-foncieres-geolocalisee-bordeaux-metropole.csv, fi_etabl_p.csv, fr-en-annuaire-education.csv, bordeaux.gtfs.zip
 ├── map.py             # Script Flask pour carte interactive
 ├── predi.py           # Script prédictif LightGBM et TensorFlow
 ├── graph_traj.py      # Analyse réseau GTFS des arrêts de bus/tramway
@@ -167,8 +168,11 @@ Puis ouvrez votre navigateur à [http://127.0.0.1:5000](http://127.0.0.1:5000).
 - [Annuaire de l'éducation](https://data.education.gouv.fr/explore/dataset/fr-en-annuaire-education/export/?disjunctive.type_etablissement\&disjunctive.libelle_academie\&disjunctive.libelle_region\&disjunctive.ministere_tutelle\&disjunctive.appartenance_education_prioritaire\&disjunctive.nom_commune\&disjunctive.code_postal\&disjunctive.code_departement)
 - [Demande de valeurs foncières géolocalisée sur Bordeaux Métropole](https://opendata.bordeaux-metropole.fr/explore/dataset/demande-de-valeurs-foncieres-geolocalisee-bordeaux-metropole/export/?location=19,44.85485,-0.5691\&basemap=jawg.streets)
 - [Etablissement (entreprises)](https://datahub.bordeaux-metropole.fr/explore/dataset/fi_etabl_p/export/)
-- [Arrêts transports Bordeaux (GTFS)](https://datahub.bordeaux-metropole.fr/explore/dataset/offres-de-services-bus-tramway-gtfs/export/) il faut télécharger l'export GTFS 
-  et le dézipper Pour récupérer les arrêts, il faut utiliser le fichier `stops.txt` et pour les temps d'arrès il faut récuperer `stop_times` dans le dossier GTFS dézippé.
+- [Arrêts transports Bordeaux (GTFS)](https://datahub.bordeaux-metropole.fr/explore/dataset/offres-de-services-bus-tramway-gtfs/export/) 
+  
+  il faut télécharger l'export GTFS 
+  et le dézipper Pour récupérer les arrêts,
+   il faut utiliser le fichier `stops.txt` et pour les temps d'arrès il faut récuperer `stop_times` dans le dossier GTFS dézippé.
   
 
 
