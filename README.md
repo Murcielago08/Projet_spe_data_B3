@@ -123,16 +123,20 @@ Puis ouvrez votre navigateur à [http://127.0.0.1:5000](http://127.0.0.1:5000).
 
 ### ✅ Exécuter les scripts d'analyse et de prédiction
 
-1. **Prédiction LightGBM / TensorFlow MLP**
+1. **Prédiction RandomForest Regressor**
 
 
    ```bash
    python predi.py
    ```
 
-   ➔ Génère les métriques MAE, R² et l’importance des variables.
+2. **Prédiction TensorFlow MLP**
 
-2. **Analyse réseau transport (GTFS)**
+   ```bash
+   python predi_proto.py 
+   ```
+
+3. **Analyse réseau transport (GTFS)**
 
    ```bash
    python graph_traj.py
@@ -145,8 +149,9 @@ Puis ouvrez votre navigateur à [http://127.0.0.1:5000](http://127.0.0.1:5000).
 ## 📈 Résultats obtenus
 
 - Visualisation interactive des logements et infrastructures sur Bordeaux.
-- Modèle TensorFlow MLP atteignant un **MAE moyen de X €** sur le jeu de test.
 - Identification des zones à forte accessibilité commerciale et éducative corrélées au prix foncier.
+- une version RandomForest atteignant un **MAE moyen de 92 000 €** sur le jeu de test.
+- Un prototype à continuer de modèle TensorFlow MLP atteignant un **MAE moyen de 520 000 €** sur le jeu de test.
 
 *(Remplacer X par ton MAE final avant publication)*
 
@@ -155,18 +160,16 @@ Puis ouvrez votre navigateur à [http://127.0.0.1:5000](http://127.0.0.1:5000).
 ## 🔮 Axes d'amélioration
 
 - Intégrer plus de villes françaises pour comparaison complète.
-- Ajouter des variables socio-économiques (revenu médian, taux de chômage).
-- Optimiser le modèle TensorFlow (early stopping, tuning).
-- Déployer la carte sur **Heroku** ou **Render** pour démonstration publique.
-
----
+- Ce servir de TensorFlow.
 
 ## 📚 Sources
 
 - [Annuaire de l'éducation](https://data.education.gouv.fr/explore/dataset/fr-en-annuaire-education/export/?disjunctive.type_etablissement\&disjunctive.libelle_academie\&disjunctive.libelle_region\&disjunctive.ministere_tutelle\&disjunctive.appartenance_education_prioritaire\&disjunctive.nom_commune\&disjunctive.code_postal\&disjunctive.code_departement)
 - [Demande de valeurs foncières géolocalisée sur Bordeaux Métropole](https://opendata.bordeaux-metropole.fr/explore/dataset/demande-de-valeurs-foncieres-geolocalisee-bordeaux-metropole/export/?location=19,44.85485,-0.5691\&basemap=jawg.streets)
 - [Etablissement (entreprises)](https://datahub.bordeaux-metropole.fr/explore/dataset/fi_etabl_p/export/)
-- [Arrêts transports Bordeaux (GTFS)](https://datahub.bordeaux-metropole.fr/explore/dataset/offres-de-services-bus-tramway-gtfs/export/)
+- [Arrêts transports Bordeaux (GTFS)](https://datahub.bordeaux-metropole.fr/explore/dataset/offres-de-services-bus-tramway-gtfs/export/) il faut télécharger l'export GTFS 
+  et le dézipper Pour récupérer les arrêts, il faut utiliser le fichier `stops.txt` et pour les temps d'arrès il faut récuperer `stop_times` dans le dossier GTFS dézippé.
+  
 
 
 
