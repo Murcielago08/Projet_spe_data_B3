@@ -19,7 +19,6 @@
   - [📈 Résultats obtenus](#-résultats-obtenus)
   - [🔮 Axes d'amélioration](#-axes-damélioration)
   - [📚 Sources](#-sources)
-    - [✨ Remarques finales](#-remarques-finales)
 
 ---
 
@@ -168,23 +167,3 @@ Puis ouvrez votre navigateur à [http://127.0.0.1:5000](http://127.0.0.1:5000).
 - [Demande de valeurs foncières géolocalisée sur Bordeaux Métropole](https://opendata.bordeaux-metropole.fr/explore/dataset/demande-de-valeurs-foncieres-geolocalisee-bordeaux-metropole/export/?location=19,44.85485,-0.5691\&basemap=jawg.streets)
 - [Etablissement (entreprises)](https://datahub.bordeaux-metropole.fr/explore/dataset/fi_etabl_p/export/)
 - [Arrêts transports Bordeaux (GTFS)](https://datahub.bordeaux-metropole.fr/explore/dataset/offres-de-services-bus-tramway-gtfs/export/)
-
----
-
-### ✨ Remarques finales
-
-Pense à compléter la section **Résultats** avec tes performances finales avant ton push GitHub.\
-Ajoute un badge de licence et un badge Python si tu publies en open-source.
-
----
-
-*(Généré par ChatGPT pour ton projet Data B3)*
-
----
-
-```
-README.md généré 📄 - à placer directement à la racine de ton projet.
-```
-
-Dis-moi si tu souhaites le transformer en PDF formaté pour tes soutenances cette semaine.
-
