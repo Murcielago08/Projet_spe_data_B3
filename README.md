@@ -167,9 +167,3 @@ Puis ouvrez votre navigateur à [http://127.0.0.1:5000](http://127.0.0.1:5000).
 - [Demande de valeurs foncières géolocalisée sur Bordeaux Métropole](https://opendata.bordeaux-metropole.fr/explore/dataset/demande-de-valeurs-foncieres-geolocalisee-bordeaux-metropole/export/?location=19,44.85485,-0.5691\&basemap=jawg.streets)
 - [Etablissement (entreprises)](https://datahub.bordeaux-metropole.fr/explore/dataset/fi_etabl_p/export/)
 - [Arrêts transports Bordeaux (GTFS)](https://datahub.bordeaux-metropole.fr/explore/dataset/offres-de-services-bus-tramway-gtfs/export/)
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> f1a4e367c01c6229261883aa33efa6e8db1cc529
