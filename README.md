@@ -14,6 +14,7 @@
     - [3. Activer l'environnement virtuel](#3-activer-lenvironnement-virtuel)
     - [4. Installer les dépendances](#4-installer-les-dépendances)
   - [🚀 Utilisation](#-utilisation)
+    - [✅ Lancer le notebook](#-lancer-le-notebook)
     - [✅ Lancer la carte interactive](#-lancer-la-carte-interactive)
     - [✅ Exécuter les scripts d'analyse et de prédiction](#-exécuter-les-scripts-danalyse-et-de-prédiction)
   - [📈 Résultats obtenus](#-résultats-obtenus)
@@ -113,6 +114,10 @@ pip install -r requirements.txt
 ---
 
 ## 🚀 Utilisation
+
+### ✅ Lancer le notebook
+
+Aller dans le fichier ```data_clean.ipynb``` et sélectionner votre environnement que vous avez créer juste au dessus 
 
 ### ✅ Lancer la carte interactive
 
