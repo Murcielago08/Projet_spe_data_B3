@@ -250,8 +250,8 @@ def index():
         prix_min = request.form.get("prix_min")
         prix_max = request.form.get("prix_max")
         type_bien = request.form.getlist("type_bien")
-        # statut_etab = request.form.getlist("statut")
-        # type_etab = request.form.getlist("type_etab")
+        statut_etab = request.form.getlist("statut")
+        type_etab = request.form.getlist("type_etab")
 
         # Application des filtres APRÈS avoir extrait les valeurs uniques
         # Filtrage multi-valeurs pour année (si rien n'est coché, on ne filtre pas)
@@ -298,11 +298,11 @@ def index():
             df_logement = df_logement[df_logement["type_de_local"].isin(type_bien)]
 
         # Filtrage multi-valeurs pour statut_etab
-        # if statut_etab:
-        #     df_educ = df_educ[df_educ["statut_public_prive"].isin(statut_etab)]
+        if statut_etab:
+            df_educ = df_educ[df_educ["statut_public_prive"].isin(statut_etab)]
         # Filtrage multi-valeurs pour type_etab
-        # if type_etab:
-        #     df_educ = df_educ[df_educ["type_etablissement"].isin(type_etab)]
+        if type_etab:
+            df_educ = df_educ[df_educ["type_etablissement"].isin(type_etab)]
 
         # Limite du nombre de points par couche
         MAX_POINTS = 10000
