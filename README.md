@@ -27,15 +27,17 @@
 
 Dans le cadre de notre projet de spécialité en Data Science (Bachelor 3 Ynov), nous avons choisi d'explorer les données de **data.education.gouv.fr** et **datahub.bordeaux-metropole.fr** afin d’analyser le marché immobilier de Bordeaux et de le comparer à d'autres villes. Notre objectif est de proposer une **analyse commerciale enrichie**, de développer des **modèles prédictifs** robustes et de créer des **visualisations interactives** pour mieux comprendre les dynamiques territoriales.
 
----
-
 ## ❓ Problématique
 
 > **Comment les prix de l'immobilier à Bordeaux se comparent-ils à ceux d'autres villes françaises et quels facteurs géographiques ou socio-économiques influencent ces prix ?**
 
----
-
 ## 🌟 Objectifs
+=======
+- **La visualisation géographique** des logements, établissements financiers et établissements scolaires sur Bordeaux.
+- **L’exploration dynamique** grâce à des filtres : année, prix, type de bien, commune, type et statut d’établissement.
+- **L’analyse croisée** entre le marché immobilier, la présence d’entreprises et l’offre éducative, pour mieux comprendre les dynamiques territoriales.
+
+La carte permet ainsi d’identifier des tendances, des zones attractives ou sous-dotées, et d’appuyer des analyses commerciales.
 
 ✅ Visualiser géographiquement :
 
@@ -120,11 +122,10 @@ python map.py
 
 Puis ouvrez votre navigateur à [http://127.0.0.1:5000](http://127.0.0.1:5000).
 
----
-
 ### ✅ Exécuter les scripts d'analyse et de prédiction
 
 1. **Prédiction LightGBM / TensorFlow MLP**
+
 
    ```bash
    python predi.py
