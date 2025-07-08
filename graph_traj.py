@@ -6,10 +6,10 @@ from geopy.distance import geodesic
  
  
  
-stops = pd.read_csv('stops.txt')
-stop_times = pd.read_csv('stop_times.txt', dtype=str, low_memory=False)
- 
- 
+stops = pd.read_csv('./db/stops.txt')
+stop_times = pd.read_csv('./db/stop_times.txt', dtype=str, low_memory=False)
+
+
 def parse_time(t):
     h, m, s = map(int, t.split(":"))
     return h * 3600 + m * 60 + s

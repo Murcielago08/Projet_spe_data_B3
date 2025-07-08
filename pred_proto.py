@@ -8,6 +8,15 @@ from sklearn.neighbors import BallTree
 import networkx as nx
 from geopy.distance import geodesic
 from collections import defaultdict
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import layers
+
+
+
+# 🔧 Coordonnées du centre de Bordeaux
+lat_center = 44.833328
+lon_center = -0.56667
 
 # 🔧 Fonction utilitaire pour BallTree
 def count_neighbors(tree, points, radius_m):
@@ -18,19 +27,19 @@ def count_neighbors(tree, points, radius_m):
 # =====================================
 # 📝 1. Charger les données immobilières
 # =====================================
-df = pd.read_csv("./db/Bordeaux.csv", sep=";", encoding="utf-8", skiprows=lambda i: i > 0 and np.random.rand() > 0.10)
+df = pd.read_csv("./db/Bordeaux.csv", sep=";", encoding="utf-8", skiprows=lambda i: i > 0 and np.random.rand() > 1)
 print("DVF chargé")
 
 # Nettoyer lat/lon
-df = df.dropna(subset=["valeur_fonciere", "latitude", "longitude"]).reset_index(drop=True)
-df['lat_rad'] = np.deg2rad(df['latitude'])
-df['lon_rad'] = np.deg2rad(df['longitude'])
+df = df.dropna(subset=["Valeur foncière", "Latitude", "Longitude"]).reset_index(drop=True)
+df['lat_rad'] = np.deg2rad(df['Latitude'])
+df['lon_rad'] = np.deg2rad(df['Longitude'])
 logements_coords = df[['lat_rad', 'lon_rad']].to_numpy()
 
 # =====================================
 # 📝 2. Charger commerces et écoles
 # =====================================
-commerces = pd.read_csv("./db/fi_etabl_p.csv", sep=";", encoding="utf-8", skiprows=lambda i: i > 0 and np.random.rand() > 0.1)
+commerces = pd.read_csv("./db/entreprise_bordeaux.csv", sep=";", encoding="utf-8", skiprows=lambda i: i > 0 and np.random.rand() > 0.1)
 ecoles = pd.read_csv("./db/educ_bordeaux.csv", sep=";", encoding="utf-8", skiprows=lambda i: i > 0 and np.random.rand() > 0.1)
 
 # Nettoyer Geo Point commerces
@@ -74,19 +83,31 @@ df['n_commerces_1000m'] = count_neighbors(tree_commerces, logements_coords, 1000
 df['n_ecoles_1000m'] = count_neighbors(tree_ecoles, logements_coords, 1000)
 df['n_stops_1000m'] = count_neighbors(tree_stops, logements_coords, 1000)
 
+df["distance_to_center_m"] = df.apply(lambda row: geodesic((row["Latitude"], row["Longitude"]), (lat_center, lon_center)).meters, axis=1)
+df["delta_lat"] = df["Latitude"] - lat_center
+df["delta_lon"] = df["Longitude"] - lon_center
+df["Date de la mutation"] = pd.to_datetime(df["Date de la mutation"])
+
 # =====================================
 # 📝 6. Encodage one-hot et préparation des features
 # =====================================
-df = pd.get_dummies(df, columns=["code_type_local", "type_local"], drop_first=True)
+df = pd.get_dummies(df, columns=["Code du type de local", "Type de local"], drop_first=True)
 
 # Réduire la taille pour tests rapides
 df = df.sample(frac=0.10, random_state=42).reset_index(drop=True)
 
-X = df[["surface_reelle_bati", "nombre_pieces_principales", "surface_terrain",
-        "code_postal", "n_commerces_1000m", "n_ecoles_1000m", "n_stops_1000m"] +
-       [col for col in df.columns if col.startswith("code_type_local_") or col.startswith("type_local_")]].fillna(0)
+# Sélectionner toutes les colonnes de features pertinentes après one-hot encoding
+feature_cols = [
+    "Code postal", "n_commerces_1000m", "n_ecoles_1000m",
+    "Nombre de lots", "Surface réelle du bâti",
+    "Nombre de pièces principales", "Surface du terrain",
+    "distance_to_center_m", "delta_lat", "delta_lon"
+    ,"Date de la mutation"
+] + [col for col in df.columns if col.startswith("Code du type de local_") or col.startswith("Type de local_")]
 
-y = df["valeur_fonciere"]
+X = df[feature_cols].apply(pd.to_numeric, errors='coerce').fillna(0)
+y = df["Valeur foncière"]
+
 
 # =====================================
 # 📝 7. Split train/test
@@ -94,22 +115,49 @@ y = df["valeur_fonciere"]
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # =====================================
-# 📝 8. Modèle LightGBM (alternative Random Forest)
+# 📝 8. Modèle TensorFlow MLPRegressor
 # =====================================
-model = RandomForestRegressor(n_estimators=2000)
-model.fit(X_train, y_train)
+
+# Normalisation (important pour les réseaux de neurones)
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+# Définir l'architecture du modèle
+model = keras.Sequential([
+    layers.Dense(128, activation='relu', input_shape=[X_train_scaled.shape[1]]),
+    layers.Dense(64, activation='relu'),
+    layers.Dense(1)
+])
+
+# Compiler le modèle
+model.compile(
+    optimizer='adam',
+    loss='mean_absolute_error',
+    metrics=['mean_absolute_error']
+)
+
+# Entraîner le modèle
+history = model.fit(
+    X_train_scaled, y_train,
+    validation_split=0.2,
+    epochs=50,
+    batch_size=32,
+    verbose=1
+)
 
 # =====================================
 # 📝 9. Prédictions et évaluation
 # =====================================
-y_pred = model.predict(X_test)
-y_train_pred = model.predict(X_train)
+# Prédictions
+y_pred = model.predict(X_test_scaled).flatten()
+y_train_pred = model.predict(X_train_scaled).flatten()
 
+# Évaluation globale
 mae_test = mean_absolute_error(y_test, y_pred)
 mae_train = mean_absolute_error(y_train, y_train_pred)
 r2 = r2_score(y_test, y_pred)
-
-# 🔢 MAE en pourcentage du prix moyen (test set)
 mae_test_pct = (mae_test / y_test.mean()) * 100
 
 print(f"MAE (Mean Absolute Error) - Test : {mae_test:.2f}")
@@ -119,9 +167,39 @@ print(f"R² score : {r2:.4f}")
 
 
 # =====================================
+# 🔢 MAE par type de local
+# =====================================
+print("\n🔎 MAE par type de local :")
+
+# Si la colonne originale 'Type de local' existe encore
+if "Type de local" in df.columns:
+    types_test = df.loc[X_test.index, "Type de local"]
+else:
+    # Reconstituer à partir du one-hot encoding
+    type_cols = [col for col in X_test.columns if col.startswith("Type de local_")]
+    if type_cols:
+        types_test = X_test[type_cols].idxmax(axis=1).str.replace("Type de local_", "")
+    else:
+        types_test = pd.Series(["Inconnu"] * len(X_test), index=X_test.index)
+
+# Calcul MAE pour chaque type
+for t in types_test.unique():
+    idx = types_test == t
+    if idx.sum() > 0:
+        mae_t = mean_absolute_error(y_test[idx], y_pred[idx])
+        print(f"Type: {t:<20} | MAE: {mae_t:,.2f} € | N = {idx.sum()}")
+
+
+
+# =====================================
 # 📝 10. Importance des variables
 # =====================================
-importances = pd.Series(model.feature_importances_, index=X.columns)
-importances.sort_values(ascending=False).plot(kind="bar", title="Importance des variables")
-plt.tight_layout()
+#importances = pd.Series(model.feature_importances_, index=X.columns)
+#importances.sort_values(ascending=False).plot(kind="bar", title="Importance des variables")
+#plt.tight_layout()
+
+df[["Valeur foncière"]].boxplot()
+plt.ylim(750000, 3000000)  # Limiter l'axe y pour mieux visualiser les valeurs
+plt.title("Boxplot des valeurs foncières (limité à 1M€)")
+plt.ylabel("€")
 plt.show()

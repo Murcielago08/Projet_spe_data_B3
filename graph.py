@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import ipywidgets as widgets
 from IPython.display import display, clear_output
 
-df_bordeaux = pd.read_csv("Bordeaux.csv", sep=",", encoding="utf-8")
+df_bordeaux = pd.read_csv("/db/Bordeaux.csv", sep=",", encoding="utf-8")
 
 # Liste des colonnes numériques et catégorielles
 colonnes_numeriques = df_bordeaux.select_dtypes(include=["float", "int"]).columns.tolist()
