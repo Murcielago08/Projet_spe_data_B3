@@ -16,21 +16,21 @@
 
 ## Introduction
 
-Dans le cadre de notre projet de spécialité en Data Science, nous avons choisi d'explorer les données de **data.education.gouv.fr** et **datahub.bordeaux-metropole.fr** pour analyser le marché immobillier à bordeaux et le comparé au autre ville. Notre objectif est proposer une analyse commercial ainsi que de développer des modèles prédictifs et des visualisations interactives pour mieux comprendre les dynamiques des données.
+Dans le cadre de notre projet de spécialité en Data Science, nous avons choisi d'explorer les données de **data.education.gouv.fr** et **datahub.bordeaux-metropole.fr** pour analyser le marché immobillier à bordeaux et le comparé au autre ville. Notre objectif est de proposer une analyse commercial ainsi que de développer des modèles prédictifs et des visualisations interactives pour mieux comprendre les dynamiques des données.
 
 ## Problematique
 
-Comment les prix de l'immobilier à Bordeaux se comparent-ils à ceux d'autres villes françaises ?
+
 
 ## Objectifs
 
 L'objectif principal de la carte interactive est de permettre :
 
-- **La visualisation géographique** des logements, établissements financiers et établissements scolaires sur Bordeaux et sa métropole.
-- **L’exploration dynamique** grâce à des filtres : année, prix, type de bien, commune, type et statut d’établissement, etc.
+- **La visualisation géographique** des logements, établissements financiers et établissements scolaires sur Bordeaux.
+- **L’exploration dynamique** grâce à des filtres : année, prix, type de bien, commune, type et statut d’établissement.
 - **L’analyse croisée** entre le marché immobilier, la présence d’entreprises et l’offre éducative, pour mieux comprendre les dynamiques territoriales.
 
-La carte permet ainsi d’identifier des tendances, des zones attractives ou sous-dotées, et d’appuyer des analyses commerciales ou prédictives.
+La carte permet ainsi d’identifier des tendances, des zones attractives ou sous-dotées, et d’appuyer des analyses commerciales.
 
 
 ### Récupérer l'environnement
@@ -76,7 +76,7 @@ Pour lancer l’application web et accéder à la carte interactive :
 
 1. **Assurez-vous d’avoir installé les dépendances** (voir section précédente).
 
-2. **Démarrez le serveur Flask** depuis le dossier du projet :
+2. **Démarrez le serveur Flask** depuis le dossier du projet et exécutez cette commande :
 
    ```bash
    python map.py
